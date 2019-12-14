@@ -7,18 +7,18 @@ export class Wine extends Component {
       return null;
     }
     return (
-      <div className="col s12 m12 l6">
-        <h2 className="center-align">Wine details</h2>
-        <div className="card horizontal">
-          <div className="card-image">
+      <div className='col s12 m12 l6 offset-l3 '>
+        <h2 className='center-align'>Wine details</h2>
+        <div className='card horizontal'>
+          <div className='card-image'>
             <img
-              className="responsive-img wine-detail-image"
-              alt="Wine bottle pic"
-              src={`${this.props.host}/api/wines/${this.props.wine.id}/image`}
+              className='responsive-img wine-detail-image'
+              alt='Wine bottle pic'
+              src={`https://wines-api.herokuapp.com/api/wines/${this.props.wine.id}/image`}
             />
           </div>
-          <div className="card-stacked">
-            <div className="card-content">
+          <div className='card-stacked'>
+            <div className='card-content'>
               <h3>{this.props.wine.name}</h3>
               <br />
               <p>
@@ -35,7 +35,7 @@ export class Wine extends Component {
               </p>
               <CommentList wine={this.props.wine} />
             </div>
-            <div className="card-action">
+            <div className='card-action'>
               <LikeButton wine={this.props.wine} />
               <CommentButton openCommentModal={this.props.openCommentModal} />
             </div>

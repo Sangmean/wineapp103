@@ -11,18 +11,16 @@ export class WineList extends Component {
       return null;
     }
     return (
-      <div className="col s12 m6 l3">
-        <h2 className="center-align">Wines</h2>
-        <div className="collection">
+      <div className='col s12 m6 l3 offset-l4 '>
+        <h2 className='center-align'>Wines</h2>
+        <div className='collection'>
           {this.props.wines.map(wine => (
             <a
               key={wine.id}
-              href="#!"
+              href='#!'
               onClick={e => this.onSelectWine(e, wine.id)}
-              className={[
-                'collection-item',
-                this.props.wine && wine.id === this.props.wine.id ? 'active' : '',
-              ].join(' ')}>
+              className={['collection-item', this.props.wine && wine.id === this.props.wine.id ? 'active' : ''].join(' ')}
+            >
               {wine.name}
             </a>
           ))}

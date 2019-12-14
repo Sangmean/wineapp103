@@ -8,17 +8,16 @@ export class Regions extends Component {
 
   render() {
     return (
-      <div className="col s12 m6 l3">
-        <h2 className="center-align">Regions</h2>
-        <div className="collection">
+      <div className='col s12 m6 l3 offset-l4 offset-m3'>
+        <h2 className='center-align'>Regions</h2>
+        <div className='collection '>
           {this.props.regions.map(region => (
             <a
               key={region}
-              href="#!"
+              href='#!'
               onClick={e => this.onSelectRegion(e, region)}
-              className={['collection-item', region === this.props.region ? 'active' : ''].join(
-                ' '
-              )}>
+              className={['collection-item', region === this.props.region ? 'active' : ''].join(' ')}
+            >
               {region}
             </a>
           ))}
