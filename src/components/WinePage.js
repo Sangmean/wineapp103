@@ -1,45 +1,41 @@
 import React, { Component } from 'react';
-import * as WinesService from '../services/Wines';
+//import * as WinesService from '../services/Wines';
 import { Wine } from './Wine';
 import { Loader } from './Loader';
 import { Header } from './Header';
+import { connect } from 'react-redux';
+import { fetchWineView } from '../actions';
 
-export class WinePage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: false,
-      wine: null
-    };
-  }
-
+export class _WinePage extends Component {
   componentDidMount() {
-    this.setState({ loading: true }, () => {
-      WinesService.fetchWine(this.props.match.params.wineId).then(wine => {
-        console.log('Checking getting WineId ', this.props.match.params.wineId);
-        this.setState({
-          loading: false,
-          wine
-        });
-      });
-    });
+    this.props.fetchWineView(this.props.match.params.wineId);
   }
 
   render() {
-    if (this.state.loading) {
+    //console.log();
+    if (this.props.loading) {
       return (
-        <div className='center-align'>
+        <div className="center-align">
           <Loader />
         </div>
       );
     }
     return (
-      <div className='container'>
+      <div className="container">
         <Header {...this.props} />
-        <div className='row'>
-          <Wine wine={this.state.wine} />
+        <div className="row">
+          <Wine wineView={this.props.wineView} />
         </div>
       </div>
     );
   }
 }
+
+export const mapFromStoreToProps = store => {
+  return {
+    wineView: store.wineView,
+    loading: store.loading === 'HTTP_LOADING'
+  };
+};
+
+export const WinePage = connect(mapFromStoreToProps, { fetchWineView })(_WinePage);

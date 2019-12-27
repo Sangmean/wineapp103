@@ -1,28 +1,14 @@
 import React, { Component } from 'react';
-import * as WinesService from '../services/Wines';
+//import * as WinesService from '../services/Wines';
 import { WineList } from './WineList';
 import { Loader } from './Loader';
 import { Header } from './Header';
+import { connect } from 'react-redux';
+import { fetchWineList } from '../actions';
 
-export class WineListPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: false,
-      wines: []
-    };
-  }
-
+export class _WineListPage extends Component {
   componentDidMount() {
-    this.setState({ loading: true }, () => {
-      WinesService.fetchWinesFrom(this.props.match.params.regionId).then(wines => {
-        console.log('Am I getting correct regionId :::::::::', this.props.match.params.regionId);
-        this.setState({
-          loading: false,
-          wines
-        });
-      });
-    });
+    this.props.fetchWineList(this.props.match.params.regionId);
   }
 
   onSelectWine = wine => {
@@ -32,21 +18,30 @@ export class WineListPage extends Component {
   };
 
   render() {
-    if (this.state.loading) {
+    if (this.props.loading) {
       return (
-        <div className='center-align'>
+        <div className="center-align">
           <Loader />
         </div>
       );
     }
     return (
-      <div className='container'>
+      <div className="container">
         <Header {...this.props} />
 
-        <div className='row'>
-          <WineList onSelectWine={this.onSelectWine} wines={this.state.wines} />
+        <div className="row">
+          <WineList onSelectWine={this.onSelectWine} wines={this.props.wines} rr={{}} />
         </div>
       </div>
     );
   }
 }
+
+function mapFromStoreToProps(store) {
+  return {
+    wines: store.wines,
+    loading: store.loading === 'HTTP_LOADING'
+  };
+}
+
+export const WineListPage = connect(mapFromStoreToProps, { fetchWineList })(_WineListPage);
